@@ -12,8 +12,6 @@ let rejectedSection = document.getElementById('Rejected-section');
 
 const noJobsOne = document.getElementById('No-jobs-one');
 const noJobsTwo = document.getElementById('No-jobs-two');
-console.log(interviewSection.contains(noJobsOne));
-console.log(rejectedSection.contains(noJobsTwo));
 
 function count(){
   if(interviewSection.contains(noJobsOne) && rejectedSection.contains(noJobsTwo)){
@@ -106,6 +104,8 @@ mainContainer.addEventListener('click', function (event) {
     rejectedList.push(cardInfo);
     renderRejected()
   }
+  interviewList = interviewList.filter(item => item.name != cardInfo.name);
+  renderInterview();
   count();
   }
   
@@ -137,8 +137,26 @@ mainContainer.addEventListener('click', function (event) {
     interviewList.push(cardInfo);
     renderInterview()
   }
+  rejectedList = rejectedList.filter(item => item.name != cardInfo.name);
+  renderRejected();
   count();
   
+  }
+
+  else if (event.target.closest('.Delete-btn')) {
+  const card = event.target.closest('.border-0');
+
+  const name = card.querySelector('.name').innerText;
+
+  interviewList = interviewList.filter(item => item.name !== name);
+  rejectedList = rejectedList.filter(item => item.name !== name);
+
+  card.remove();
+
+  renderInterview();
+  renderRejected();
+
+  count();
   }
 })
 
@@ -220,4 +238,34 @@ function renderRejected() {
     rejectedSection.appendChild(divs);
   }
 }
+
+function noJobsRejectedSection(){
+  if(rejectedSection.childElementCount == 0){
+    const div = document.createElement('div');
+    div.innerHTML = `
+    <div id="No-jobs-two" class="border-0 rounded-md shadow bg-white py-20 mb-7 text-center">
+        <i class="fa-regular fa-file-lines text-[80px]"></i>
+        <h1 class="font-bold text-3xl">No jobs available</h1>
+        <p class="text-slate-400">Check back soon for new job opportunities</p>
+      </div>
+    `
+    rejectedSection.appendChild(div);
+  }
+}
+function noJobsInterviewSection(){
+  if(interviewSection.childElementCount == 0){
+    const div = document.createElement('div');
+    div.innerHTML = `
+    <div id="No-jobs-one" class="border-0 rounded-md shadow bg-white py-20 mb-7 text-center">
+        <i class="fa-regular fa-file-lines text-[80px]"></i>
+        <h1 class="font-bold text-3xl">No jobs available</h1>
+        <p class="text-slate-400">Check back soon for new job opportunities</p>
+      </div>
+    `
+    interviewSection.appendChild(div);
+  }
+
+}
+noJobsRejectedSection()
+noJobsInterviewSection()
 
