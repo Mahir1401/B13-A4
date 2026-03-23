@@ -38,4 +38,4 @@ It's useful because we need less event listeners and we do not need to add liste
 
 ### 5. What is the difference between preventDefault() and stopPropagation() methods?
 
-Ans:preventDefault() blocks browser action and
+Ans:preventDefault() blocks browser action and stopPropagation() blocks event flow
